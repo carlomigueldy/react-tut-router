@@ -1,45 +1,37 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import LogoutPage from "./pages/LogoutPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <>
+      {/* parent routes */}
+      <Router>
+        <Switch>
+          <Route component={UnauthorizedPage} path="/unauthorized" />
+
+          <Route component={LoginPage} path="/login" />
+
+          <Route component={LogoutPage} path="/logout" />
+
+          {/* parent route ni ProfilePage */}
+          <Route component={HomePage} path="/home" />
+
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+
+          <Route component={NotFoundPage} path="**" />
+        </Switch>
+      </Router>
+    </>
+  );
 }
 
-export default App
+export default App;
